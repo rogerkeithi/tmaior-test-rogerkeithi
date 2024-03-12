@@ -1,9 +1,9 @@
 var express = require('express');
+require('dotenv').config()
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongoose = require('mongoose');
-require('dotenv').config()
 
 app.use(express.static(__dirname));
 app.use(express.json());
@@ -17,10 +17,14 @@ io.on('connection', () =>{
 
 mongoose.connect(`${process.env.DATABASE_URL}`);
 
-var port = 3001;
+var port = 3000;
 http.listen(port, () => console.log(`Listening on port ${port}`));
 
 //Endpoints
+app.get('/', function(req, res){
+    res.sendFile(__dirname + '/index.html');
+});
+
 app.get('/messages', async (req, res) => {
     try {
         const messages = await Message.find({});
