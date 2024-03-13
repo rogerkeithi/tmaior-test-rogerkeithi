@@ -5,6 +5,12 @@ AWS_REGION=$3
 AWS_ACCOUNT_ID=$4
 AWS_ACCESS_KEY_ID=$5
 AWS_SECRET_ACCESS_KEY=$6
+ENV_FILE=$7
+
+echo "Build the application"
+echo $ENV_FILE > .env
+npm install --omit=dev
+npm run build
 
 echo "Setting up AWS CLI"
 aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
