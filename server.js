@@ -15,6 +15,9 @@ var Message = mongoose.model('Message',{ name : String, message : String})
 
 io.on('connection', () =>{
     console.log('a user is connected')
+    socket.on('message', (msg) => {
+        console.log('message: ' + msg);
+      });
 })
 
 mongoose.connect(`${process.env.DATABASE_URL}`);
