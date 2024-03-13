@@ -15,19 +15,6 @@ var Message = mongoose.model('Message',{ name : String, message : String})
 
 io.on('connection', (socket) =>{
     console.log('a user is connected')
-    socket.on('message', async (msg) => {
-        console.log('message: ' + msg);
-        try {
-            const message = new Message({ name: 'Mensagem do Sistema', message: msg});
-            await message.save();
-            io.emit('message', { name: 'Mensagem do Sistema', message: msg});
-            sendStatus(200);
-            sendFile(__dirname + '/index.html');
-        } catch (err) {
-            console.error('Error saving message:', err);
-            res.sendStatus(500);
-        }
-      });
 })
 
 mongoose.connect(`${process.env.DATABASE_URL}`);
@@ -55,6 +42,14 @@ app.post('/messages', async (req, res) => {
         const message = new Message(req.body);
         await message.save();
         io.emit('message', req.body);
+
+        if(message.message === 'aaa'){
+            const body = {name:'Mensagem do sistema', message:'Você enviou a mensagem "aaa"'};
+            const sysMessage = new Message(body);
+            await sysMessage.save();
+            io.emit('message', body);
+        }
+
         res.sendStatus(200);
     } catch (err) {
         console.error('Error saving message:', err);
