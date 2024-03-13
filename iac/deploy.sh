@@ -27,8 +27,8 @@ docker tag $AWS_IMAGE:$AWS_IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazona
 docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$AWS_IMAGE:$AWS_IMAGE_TAG
 
 echo "Setting up SSH"
-chmod 400 "ec2-tmaior-test-key.pem"
-ssh -i "ec2-tmaior-test-key.pem" ubuntu@ec2-18-234-171-130.compute-1.amazonaws.com
+chmod 400 "${{github.workspace}}/iac/ec2-tmaior-test-key.pem"
+ssh -i "${{github.workspace}}/iac/ec2-tmaior-test-key.pem" ubuntu@ec2-18-234-171-130.compute-1.amazonaws.com
 
 echo "Docker pull"
 docker stop $(docker ps -a -q)
