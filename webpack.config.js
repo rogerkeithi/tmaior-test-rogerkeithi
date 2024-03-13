@@ -14,7 +14,7 @@ module.exports = {
   target: 'node',
   plugins: [
     new Dotenv({
-      path: '.env',
+      path: './.env',
       systemvars: true,
     }),
     new CopyWebpackPlugin({
