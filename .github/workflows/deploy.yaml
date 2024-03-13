@@ -41,19 +41,11 @@ jobs:
           name: id_rsa
           known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
 
-      - name: Connect to EC2 instance and pull Docker image.
+      - name: Connect to EC2 instance, update and run Docker image
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@ec2-18-234-171-130.compute-1.amazonaws.com "
-            aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }};
-            aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }};
-            aws configure set region ${{ env.AWS_REGION }};
-            aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com;
-            ids=$(docker ps -a -q)
-              for id in $ids
-              do
-              echo "$id"
-              docker stop $id && docker rm $id
-              done;
-            docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_IMAGE }}:${{ env.AWS_IMAGE_TAG }};
-            docker run -p 3000:3000 ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_IMAGE }}:${{ env.AWS_IMAGE_TAG }};
+            sudo docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_IMAGE }}:${{ env.AWS_IMAGE_TAG }};
+            sudo docker stop \$(sudo docker ps -q);
+            sudo docker rm \$(sudo docker ps -a -q);
+            sudo docker run -d -p 3000:3000 ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_IMAGE }}:${{ env.AWS_IMAGE_TAG }};
           "
