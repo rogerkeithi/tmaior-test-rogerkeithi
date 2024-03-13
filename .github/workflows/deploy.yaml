@@ -43,4 +43,4 @@ jobs:
 
       - name: Connect to EC2 instance and pull Docker image.
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@ec2-18-234-171-130.compute-1.amazonaws.com "docker stop $(docker ps -a -q) && docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_IMAGE }}:${{ env.AWS_IMAGE_TAG }} && docker run -p 3000:3000 ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_IMAGE }}:${{ env.AWS_IMAGE_TAG }}"
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@ec2-18-234-171-130.compute-1.amazonaws.com "docker stop \$(docker ps -q) && docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_IMAGE }}:${{ env.AWS_IMAGE_TAG }} && docker run -p 3000:3000 ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_IMAGE }}:${{ env.AWS_IMAGE_TAG }}"
