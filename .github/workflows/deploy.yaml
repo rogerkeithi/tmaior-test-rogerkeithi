@@ -29,6 +29,7 @@ jobs:
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
           cat .env
           ls -a
+          
 
       - name: Deploy
         run: |
