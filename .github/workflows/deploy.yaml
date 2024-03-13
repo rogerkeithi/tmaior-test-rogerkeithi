@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: Develop
+    environment: Development
     env:
       # AWS
       AWS_REGION: us-east-1

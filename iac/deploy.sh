@@ -7,6 +7,7 @@ AWS_ACCESS_KEY_ID=$5
 AWS_SECRET_ACCESS_KEY=$6
 
 echo "Build the application"
+npm install --omit=dev
 npm run build
 
 echo "Setting up AWS CLI"
