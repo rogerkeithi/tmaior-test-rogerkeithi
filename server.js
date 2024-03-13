@@ -17,6 +17,7 @@ io.on('connection', (socket) =>{
     console.log('a user is connected')
     socket.on('message', (msg) => {
         console.log('message: ' + msg);
+        $("#messages").append(`<h4> Mensagem automática </h4> <p> mensagem recebida </p>`)
       });
 })
 
