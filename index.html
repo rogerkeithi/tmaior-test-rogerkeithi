@@ -37,7 +37,7 @@
         socket.on('message', addMessages)
 
         function addMessages(message){
-            $("#messages").append(`<h4> ${message.name} </h4> <h5>${message.date.toLocaleDateString()}</h5> <p style="background-color:white;padding:5px"> ${message.message} </p> `)
+            $("#messages").append(`<h4> ${message.name} </h4> <h5>${message.date}</h5> <p style="background-color:white;padding:5px"> ${message.message} </p> `)
         }
 
         function getMessages(){
