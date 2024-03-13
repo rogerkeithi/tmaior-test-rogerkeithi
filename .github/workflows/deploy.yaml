@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: Development
     env:
-      # AWS
+    
       AWS_REGION: us-east-1
       AWS_IMAGE_TAG: latest
       AWS_IMAGE: tmaior-test-simple-chat
@@ -29,7 +29,6 @@ jobs:
           echo DATABASE_URL="\"${{ secrets.DATABASE_URL }}\"" >> .env
           cat .env
           ls -a
-
 
       - name: Deploy
         run: |
