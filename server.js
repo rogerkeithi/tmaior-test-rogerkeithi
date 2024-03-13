@@ -13,6 +13,21 @@ app.use(express.urlencoded({extended: false}))
 
 var Message = mongoose.model('Message',{ name : String, message : String})
 
+var defaultMessages = [
+    {
+        text: 'texto A',
+        response: 'Resposta para o texto A!'
+    },
+    {
+        text: 'texto B',
+        response: 'Resposta para o texto B!'
+    },
+    {
+        text: 'texto C',
+        response: 'Resposta para o texto C!'
+    },
+]
+
 io.on('connection', (socket) =>{
     console.log('a user is connected')
 })
@@ -43,13 +58,15 @@ app.post('/messages', async (req, res) => {
         await message.save();
         io.emit('message', req.body);
 
-        if(message.message === 'aaa'){
-            const body = {name:'Mensagem do sistema', message:'Você enviou a mensagem "aaa"'};
-            const sysMessage = new Message(body);
-            await sysMessage.save();
-            io.emit('message', body);
-        }
-
+        defaultMessages.map(async (defaultMessage)=>{
+            if(message.message === defaultMessage.text){
+                const body = {name:'<b>Mensagem do sistema</b>', message: defaultMessage.response};
+                const sysMessage = new Message(body);
+                await sysMessage.save();
+                io.emit('message', body);
+            }
+        })
+        
         res.sendStatus(200);
     } catch (err) {
         console.error('Error saving message:', err);
