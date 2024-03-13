@@ -3,7 +3,13 @@ FROM node:current-alpine3.19
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY dist/ .
+COPY ./package*.json ./
+
+RUN npm install --silent
+
+COPY . .
+
+RUN npm run build
 
 EXPOSE 5000
-CMD ["node","./server-prod.js"]
+CMD ["node","dist/server-prod.js"]
