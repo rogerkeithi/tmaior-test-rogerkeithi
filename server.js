@@ -21,7 +21,8 @@ io.on('connection', (socket) =>{
             const message = new Message({ name: 'Mensagem do Sistema', message: msg});
             await message.save();
             io.emit('message', { name: 'Mensagem do Sistema', message: msg});
-            res.sendStatus(200);
+            sendStatus(200);
+            sendFile(__dirname + '/index.html');
         } catch (err) {
             console.error('Error saving message:', err);
             res.sendStatus(500);
