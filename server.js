@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended: false}))
 
 var Message = mongoose.model('Message',{ name : String, message : String})
 
-io.on('connection', () =>{
+io.on('connection', (socket) =>{
     console.log('a user is connected')
     socket.on('message', (msg) => {
         console.log('message: ' + msg);
