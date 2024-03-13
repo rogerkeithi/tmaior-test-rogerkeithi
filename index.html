@@ -43,6 +43,8 @@
         function getMessages(){
         $.get(`http://${host}/messages`, (data) => {
             data.forEach(addMessages);
+            var d = $('#messages');
+            d.scrollTop(d.prop("scrollHeight"));
         })
         }
 
