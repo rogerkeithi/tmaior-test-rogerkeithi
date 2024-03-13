@@ -1,10 +1,12 @@
 var express = require('express');
-require('dotenv').config()
+require('dotenv').config();
+var cors = require('cors');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongoose = require('mongoose');
 
+app.use(cors());
 app.use(express.static(__dirname));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))

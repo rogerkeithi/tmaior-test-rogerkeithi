@@ -24,6 +24,7 @@
             </div>
         </div>
     <script>
+        const host = window.location.host;
         var socket = io();
         $(() => {
             $("#send").click(()=>{
@@ -40,13 +41,13 @@
         }
 
         function getMessages(){
-        $.get('http://localhost:3000/messages', (data) => {
+        $.get(`http://${host}/messages`, (data) => {
             data.forEach(addMessages);
         })
         }
 
         function sendMessage(message){
-        $.post('http://localhost:3000/messages', message)
+        $.post(`http://${host}/messages`, message)
         }
     </script>
     </body>
