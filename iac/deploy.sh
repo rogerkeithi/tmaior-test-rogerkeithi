@@ -8,7 +8,8 @@ AWS_SECRET_ACCESS_KEY=$6
 ENV_FILE=$7
 
 echo "Build the application"
-echo "$ENV_FILE" > .env
+touch .env
+echo $ENV_FILE > .env
 npm install
 npm run build
 
