@@ -26,8 +26,8 @@ jobs:
       - name: 'Create env file'
         run: |
           touch ${{github.workspace}}/.env
-          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> ${{github.workspace}}.env
-          cat ${{github.workspace}}.env
+          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> ${{github.workspace}}/.env
+          cat ${{github.workspace}}/.env
 
       - name: Deploy
         run: |
