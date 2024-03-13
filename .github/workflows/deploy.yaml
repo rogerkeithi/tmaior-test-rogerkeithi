@@ -28,7 +28,7 @@ jobs:
           touch .env
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
           cat .env
-          ls
+          ls -a
 
       - name: Deploy
         run: |
