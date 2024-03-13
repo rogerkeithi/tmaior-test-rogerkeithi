@@ -48,6 +48,11 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@ec2-18-234-171-130.compute-1.amazonaws.com "
             aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com;
             docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_IMAGE }}:${{ env.AWS_IMAGE_TAG }};
-            c=$(docker ps -q) && [[ $c ]] && docker kill $c
+            ids=$(docker ps -a -q)
+            for id in $ids
+            do
+              echo "Container id: $id"
+              docker stop $id && docker rm $id
+            done
             docker run -d -p 3000:3000 ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_IMAGE }}:${{ env.AWS_IMAGE_TAG }};
           "
