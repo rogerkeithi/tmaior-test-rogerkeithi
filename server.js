@@ -44,7 +44,7 @@ app.get('/', function(req, res){
 
 app.get('/messages', async (req, res) => {
     try {
-        const messages = await Message.find({});
+        const messages = await Message.find({}).sort([['date', -1]]);
         res.send(messages);
     } catch (err) {
         console.error('Error fetching messages:', err);
