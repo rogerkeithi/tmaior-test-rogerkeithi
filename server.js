@@ -11,7 +11,7 @@ app.use(express.static(__dirname));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 
-var Message = mongoose.model('Message',{ name : String, message : String})
+var Message = mongoose.model('Message',{ name : String, message : String, date: Date})
 
 var defaultMessages = [
     {
@@ -60,7 +60,7 @@ app.post('/messages', async (req, res) => {
 
         defaultMessages.map(async (defaultMessage)=>{
             if(message.message === defaultMessage.text){
-                const body = {name:'<b>Mensagem do sistema</b>', message: defaultMessage.response};
+                const body = {name:'<b>Mensagem do sistema</b>', message: defaultMessage.response, date: new Date()};
                 const sysMessage = new Message(body);
                 await sysMessage.save();
                 io.emit('message', body);

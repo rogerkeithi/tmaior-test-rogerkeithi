@@ -28,7 +28,7 @@
         var socket = io();
         $(() => {
             $("#send").click(()=>{
-                sendMessage({name: $("#name").val(), message: $("#message").val()});
+                sendMessage({name: $("#name").val(), message: $("#message").val(), date: new Date()});
             })
 
             getMessages()
