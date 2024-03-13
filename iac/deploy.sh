@@ -31,7 +31,8 @@ chmod 400 "${{github.workspace}}/iac/ec2-tmaior-test-key.pem"
 ssh -i "${{github.workspace}}/iac/ec2-tmaior-test-key.pem" ubuntu@ec2-18-234-171-130.compute-1.amazonaws.com
 
 echo "Docker pull"
-CONTAINER_ID=$(docker ps -qf "ancestor=$AWS_IMAGE:$AWS_IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$AWS_IMAGE:$AWS_IMAGE_TAG")
+CONTAINER_ID=$(docker ps -qf "ancestor=$AWS_IMAGE")
+echo $CONTAINER_ID
 if [ ! -z "$CONTAINER_ID" ]; then
   docker stop $CONTAINER_ID
   echo "Container stopped successfully."
