@@ -9,7 +9,7 @@ ENV_FILE=$7
 
 echo "Build the application"
 echo $ENV_FILE > .env
-npm install --omit=dev
+npm install
 npm run build
 
 echo "Setting up AWS CLI"
