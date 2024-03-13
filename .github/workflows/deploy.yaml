@@ -39,6 +39,7 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           name: id_rsa
+          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
 
       - name: Connect to EC2 instance and pull Docker image.
         run: |
