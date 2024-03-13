@@ -15,9 +15,17 @@ var Message = mongoose.model('Message',{ name : String, message : String})
 
 io.on('connection', (socket) =>{
     console.log('a user is connected')
-    socket.on('message', (msg) => {
+    socket.on('message', async (msg) => {
         console.log('message: ' + msg);
-        $("#messages").append(`<h4> Mensagem automática </h4> <p> mensagem recebida </p>`)
+        try {
+            const message = new Message({ name: 'Mensagem do Sistema', message: msg});
+            await message.save();
+            io.emit('message', { name: 'Mensagem do Sistema', message: msg});
+            res.sendStatus(200);
+        } catch (err) {
+            console.error('Error saving message:', err);
+            res.sendStatus(500);
+        }
       });
 })
 
