@@ -26,6 +26,7 @@
     <script>
         const host = window.location.host;
         var socket = io();
+        
         $(() => {
             $("#send").click(()=>{
                 sendMessage({name: $("#name").val(), message: $("#message").val(), date: new Date()});
