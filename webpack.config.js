@@ -2,10 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin'); 
-const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  externals: [nodeExternals()],
   mode: 'production',
   entry: './server.js',
   output: {
