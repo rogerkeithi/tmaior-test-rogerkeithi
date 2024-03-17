@@ -12,21 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 
 var Message = mongoose.model('Message',{ name : String, message : String, date: Date})
-
-var defaultMessages = [
-    {
-        text: 'texto A',
-        response: 'Resposta para o texto A!'
-    },
-    {
-        text: 'texto B',
-        response: 'Resposta para o texto B!'
-    },
-    {
-        text: 'texto C',
-        response: 'Resposta para o texto C!'
-    },
-]
+var SysMessage = mongoose.model('SysMessage',{ text : String, response : String, date: Date})
 
 io.on('connection', (socket) =>{
     console.log('a user is connected')
@@ -37,7 +23,6 @@ mongoose.connect(`${process.env.DATABASE_URL}`);
 var port = 3000;
 http.listen(port, () => console.log(`Listening on port ${port}`));
 
-//Endpoints
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
@@ -54,19 +39,18 @@ app.get('/messages', async (req, res) => {
 
 app.post('/messages', async (req, res) => {
     try {
-        const message = new Message(req.body);
-        await message.save();
+        const messageObj = new Message(req.body);
+        await messageObj.save();
         io.emit('message', req.body);
 
-        defaultMessages.map(async (defaultMessage)=>{
-            if(message.message === defaultMessage.text){
-                const body = {name:'<b>Mensagem do sistema</b>', message: defaultMessage.response, date: new Date()};
-                const sysMessage = new Message(body);
-                await sysMessage.save();
-                io.emit('message', body);
-            }
-        })
+        const responseFound = await SysMessage.findOne({text: {$regex: messageObj.message, $options: 'i'}});
         
+        if(responseFound){
+            const body = {name:'<b>Mensagem do sistema</b>', message: responseFound.response, date: new Date()};
+            const sysMessage = new Message(body);
+            await sysMessage.save();
+            io.emit('message', body);
+        }
         res.sendStatus(200);
     } catch (err) {
         console.error('Error saving message:', err);

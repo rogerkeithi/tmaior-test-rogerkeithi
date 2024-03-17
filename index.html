@@ -8,7 +8,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
         <script src="socket.io.js"></script>
     </head>
-    <body style="background-color: rgba(68, 168, 185, 0.555);">
+    <body style="background-color: #D8BFD8;">
         <div class="container">
             <br>
             <div class="jumbotron">
@@ -37,7 +37,7 @@
         socket.on('message', addMessages)
 
         function addMessages(message){
-            $("#messages").append(`<h4> ${message.name} </h4> <h6 style="color: #343434">${message.date}</h6> <p style="background-color:white;padding:5px;border-radius:2px;"> ${message.message} </p><br>`)
+            $("#messages").append(`<h4> ${message.name} </h4> <h6 style="color: #343434">${message.date}</h6> <p style="background-color:white;padding:5px;border-radius:2px;"> ${message.message} </p><hr><br>`)
         }
 
         function getMessages(){
